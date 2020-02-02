@@ -1,11 +1,25 @@
 // import express by using require, since node.js doesn't support import express
 const express = require('express');
-require('./services/passport');
+const cookieSession = require('cookie-session');
+const passport = require('passport');
 const keys = require('./config/keys');
-const MongoClient = require('mongodb').MongoClient;
-const mongo = new MongoClient(keys.mongoURI, { useNewUrlParser: true });
+const mongoose = require('mongoose');
+mongoose.connect(keys.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true});
+require('./models/User');
+require('./services/passport');
 
 const app = express();
+
+// enable cookie
+app.use(
+  cookieSession({
+    // 30 days
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [keys.cookieKey]
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // const authRoutes = require('./routes/authRoutes');
 // authRoutes(app);
