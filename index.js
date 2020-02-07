@@ -7,6 +7,7 @@ const keys = require('./config/keys');
 const mongoose = require('mongoose');
 mongoose.connect(keys.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true});
 require('./models/User');
+require('./models/Survey');
 require('./services/passport');
 
 const app = express();
@@ -29,6 +30,7 @@ app.use(passport.session());
 // concise statement
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/surveyRoutes')(app);
 
 // add code for Heroku
 if (process.env.NODE_ENV === 'production'){
