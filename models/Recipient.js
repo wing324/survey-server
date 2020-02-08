@@ -3,7 +3,7 @@ const {Schema} = mongoose;
 
 const recipientSchema = new Schema({
   email: String,
-  responded: { type: Boolean, defaultV: false };
+  responded: { type: Boolean, default: false },
 });
 
 // we don't need to create recipient schema in mongoDB
